@@ -24,17 +24,17 @@ email:string;
 @Column({type:DataType.STRING,  allowNull:false})
 password:string;
 
-@ApiProperty({example:"true", description:"Забанен или нет"})
-@Column({type:DataType.BOOLEAN, defaultValue: false})
-banned:boolean;
+// @ApiProperty({example:"true", description:"Забанен или нет"})
+// @Column({type:DataType.BOOLEAN, defaultValue: false})
+// banned:boolean;
 
-@ApiProperty({example:"За хулиганство", description:"Причина блокировки"})
-@Column({type:DataType.STRING, allowNull:true})
-banReason:string;
+// @ApiProperty({example:"За хулиганство", description:"Причина блокировки"})
+// @Column({type:DataType.STRING, allowNull:true})
+// banReason:string;
 
-@BelongsToMany(() => Role, () => UserRoles)
-roles:Role[]
+// @BelongsToMany(() => Role, () => UserRoles)
+// roles:Role[]
 
-@HasMany(()=> Post)
-    posts:Post[]
+// @HasMany(()=> Post)
+//     posts:Post[]
 }

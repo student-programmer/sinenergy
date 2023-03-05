@@ -16,6 +16,7 @@ const NavBar = observer(() => {
     const logOut = () => {
         user.setUser({})
         user.setIsAuth(false)
+        localStorage.setItem('token', '');
     }
     return (
         <Navbar bg='dark' variant='dark'>
@@ -26,7 +27,7 @@ const NavBar = observer(() => {
                 {user.isAuth ? (
                     <Nav style={{left: 1100, position: 'relative'}}>
                         <Button className="mr-5" variant={'outline-light'} onClick={() => logOut()}>Выйти</Button>
-                        <Button variant={'outline-light'} className="ml-5"  onClick={() => navigate(ADMIN_ROUTE)}style={{marginLeft: 5}}>Админ панель</Button>
+                        {/* <Button variant={'outline-light'} className="ml-5"  onClick={() => navigate(ADMIN_ROUTE)}style={{marginLeft: 5}}>Админ панель</Button> */}
                     </Nav>
                 ) : (
                     <Nav style={{left: 1100, position: 'relative'}}>

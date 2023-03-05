@@ -25,29 +25,29 @@ constructor(private usersService: UsersService){
     @ApiOperation({summary: 'Получение пользователей'})
     @ApiResponse({status: 200, type: [User]})
     @UseGuards(JwtAuthGuard)
-    @Roles('ADMIN') //Указываем каким ролям будет доступен этот ендпоинт
-    @UseGuards(RolesGuard)
+    // @Roles('ADMIN') //Указываем каким ролям будет доступен этот ендпоинт
+    // @UseGuards(RolesGuard)
 @Get() // Создание гет запроса 
 getAll(){
     return this.usersService.getAllUser();
 }
-    @ApiOperation({summary: 'Выдать роль'})
-    @ApiResponse({status: 200})
-    @Roles('ADMIN') //Указываем каким ролям будет доступен этот ендпоинт
-    @UseGuards(RolesGuard)
-        @Post("/role") // Создание гет запроса 
-        addRole(@Body() dto: AddRoleDto){
-    return this.usersService.addRole(dto);
-}
+//     @ApiOperation({summary: 'Выдать роль'})
+//     @ApiResponse({status: 200})
+//     @Roles('ADMIN') //Указываем каким ролям будет доступен этот ендпоинт
+//     @UseGuards(RolesGuard)
+//         @Post("/role") // Создание гет запроса 
+//         addRole(@Body() dto: AddRoleDto){
+//     return this.usersService.addRole(dto);
+// }
 
-    @ApiOperation({summary: 'Забанить пользователя'})
-    @ApiResponse({status: 200})
-    @Roles('ADMIN') //Указываем каким ролям будет доступен этот ендпоинт
-    @UseGuards(RolesGuard)
-        @Post("/ban") // Создание гет запроса 
-        ban(@Body() dto: BanUserDto){
-    return this.usersService.ban(dto);
-}
+//     @ApiOperation({summary: 'Забанить пользователя'})
+//     @ApiResponse({status: 200})
+//     @Roles('ADMIN') //Указываем каким ролям будет доступен этот ендпоинт
+//     @UseGuards(RolesGuard)
+//         @Post("/ban") // Создание гет запроса 
+//         ban(@Body() dto: BanUserDto){
+//     return this.usersService.ban(dto);
+// }
 
 
 }

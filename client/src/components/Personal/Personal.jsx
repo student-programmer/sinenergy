@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react'
+import { Context } from '../..';
+import { personalCreate } from '../../http/personalAPI';
 import con from './Personal.module.css'
-const Personal = () => {
+const Personal = observer(() => {
     const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('');
 	const [description, setDescription] = useState('');
-
+	const { personal } = useContext(Context);
 	// Состояния для валидации
 	const [emailDirty, setEmailDirty] = useState(false);
 	const [nameDirty, setNameDirty] = useState(false);
@@ -66,15 +69,16 @@ const Personal = () => {
 	// Функция для отправки формы
 	const submitData =  e => {
 		e.preventDefault();
-		     fetch(' http://localhost:5000/telegram', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ name, email, phone, description }),
-		})
-			.then(response => response.json())
-			.then(result => console.log(result.response));
+ 		personalCreate( name, email, phone, description ).then(data =>
+			personal.setPersonal(data)
+		);
+		personal.setRedy(true)
+		// personal.setPersonal({name, email, phone, description})
+		// personal.setPersonal({ name, email, phone, description });
+		setName('')
+		setEmail('')
+		setPhone('')
+		setDescription('')
 	};
 
 
@@ -93,65 +97,71 @@ const Personal = () => {
 		}
 	};
 	return (
-			<div className={con.wrapper}>
-				<div className={con.login_box}>
-					<h2>Личный кабинет</h2>
-					<form>
-						{nameDirty && nameError && (
-							<div className={con.error1}>{nameError}</div>
-						)}
-						<div className={con.user_box}>
-							<input
-								type='text'
-								value={name}
-								name='name'
-								onChange={changeName}
-								onBlur={e => blurHandler(e)}
-								placeholder='Введите ваше имя:'
-							/>
-						</div>
-						{emailDirty && emailError && (
-							<div className={con.error2}>{emailError}</div>
-						)}
-						<div className={con.user_box}>
-							<input
-								type='text'
-								value={email}
-								name='email'
-								onChange={changeEmail}
-								onBlur={e => blurHandler(e)}
-								placeholder='Введите ваш e-mail:'
-							/>
-						</div>
-						{phoneDirty && phoneError && (
-							<div className={con.error3}>{phoneError}</div>
-						)}
-						<div className={con.user_box}>
-							<input
-								onChange={changeHandlerPhone}
-								onBlur={e => blurHandler(e)}
-								type='text'
-								value={phone}
-								id=''
-								name='phone'
-								placeholder='Введите номер телефона:'
-							/>
-						</div>
-						<div className={con.user_box}>
-							<textarea
-								onChange={changeHandlerDescription}
-								name='description'
-								placeholder='Комментарий...'
-								value={description}
-							></textarea>
-						</div>
-						<button disabled={!formValid} type='submit' onClick={submitData}>
-							Отправить форму
-						</button>
-					</form>
-				</div>
+		<div className={con.wrapper}>
+			<h2 className={con.personal_arcticle}>Личный кабинет</h2>
+			<div className={con.login_box}>
+				<form>
+					{nameDirty && nameError && (
+						<div className={con.error1}>{nameError}</div>
+					)}
+					<div className={con.user_box}>
+						<input
+							type='text'
+							value={name}
+							name='name'
+							onChange={changeName}
+							onBlur={e => blurHandler(e)}
+							placeholder='Введите ваше имя:'
+						/>
+					</div>
+					{emailDirty && emailError && (
+						<div className={con.error2}>{emailError}</div>
+					)}
+					<div className={con.user_box}>
+						<input
+							type='text'
+							value={email}
+							name='email'
+							onChange={changeEmail}
+							onBlur={e => blurHandler(e)}
+							placeholder='Введите ваш e-mail:'
+						/>
+					</div>
+					{phoneDirty && phoneError && (
+						<div className={con.error3}>{phoneError}</div>
+					)}
+					<div className={con.user_box}>
+						<input
+							onChange={changeHandlerPhone}
+							onBlur={e => blurHandler(e)}
+							type='text'
+							value={phone}
+							id=''
+							name='phone'
+							placeholder='Введите номер телефона:'
+						/>
+					</div>
+					<div className={con.user_box}>
+						<textarea
+							className={con.facts}
+							onChange={changeHandlerDescription}
+							name='description'
+							placeholder='Несколько интересных фактов о вас...'
+							value={description}
+						></textarea>
+					</div>
+					<button
+						disabled={!formValid}
+						type='submit'
+						onClick={submitData}
+						className={con.sends}
+					>
+						Отправить форму
+					</button>
+				</form>
 			</div>
-  )
-}
+		</div>
+	);
+})
 
 export default Personal

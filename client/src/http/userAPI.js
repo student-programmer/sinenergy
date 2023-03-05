@@ -12,12 +12,10 @@ export const login = async (email, password) =>{
     return jwt_decode(data.token)
 }
 export const check = async () =>{
-    const {data} = await $authHost.get('auth/check')
-    localStorage.setItem('token', data.token)
-    console.log(data)
-    return jwt_decode(data.token)
-}
-export const fetchCategory = async () => {
-    const {data} = await $authHost.get('/category')
-    return data
+    const { data } = await $authHost.get('auth/check');
+		if (data.token === localStorage.getItem('token')) {
+			console.log('')
+		} else {
+			console.log();
+		}
 }

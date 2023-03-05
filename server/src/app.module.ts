@@ -15,38 +15,37 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import { CategoryModule } from './category/category.module';
 import * as path from 'path'
 import { Category } from "./category/category.model";
-import { ArticlesModule } from './articles/articles.module';
-import { Arcticles } from "./articles/articles.model";
+import { PersonalModule } from './personal/personal.module';
+import { Personal } from './personal/personal.model';
 
 @Module({
-    controllers:[], 
-    providers:[],
-    imports:[
-        ConfigModule.forRoot({
-            envFilePath:`.${process.env.NODE_ENV}.env`
-        }),
-        ServeStaticModule.forRoot({
-            rootPath: path.resolve(__dirname, 'static')
-        }),
-        SequelizeModule.forRoot({
-            dialect: 'postgres',
-            host: process.env.POSTGRES_HOST,
-            port: Number(process.env.POSTGRES_PORT),
-            username: process.env.POSTGRES_USER,
-            password: process.env.POSTGRES_PASSWORD,
-            database: process.env.POSTGRES_DB,
-            models: [User, Role, UserRoles, Post, Category, Arcticles],
-            autoLoadModels: true
-        }),
-        UsersModule,
-        RolesModule,
-        AuthModule,
-        PostsModule,
-        FilesModule,
-        CategoryModule,
-        ArticlesModule 
-    ]
+	controllers: [],
+	providers: [],
+	imports: [
+		ConfigModule.forRoot({
+			envFilePath: `.${process.env.NODE_ENV}.env`,
+		}),
+		ServeStaticModule.forRoot({
+			rootPath: path.resolve(__dirname, 'static'),
+		}),
+		SequelizeModule.forRoot({
+			dialect: 'postgres',
+			host: process.env.POSTGRES_HOST,
+			port: Number(process.env.POSTGRES_PORT),
+			username: process.env.POSTGRES_USER,
+			password: process.env.POSTGRES_PASSWORD,
+			database: process.env.POSTGRES_DB,
+			// models: [User, Role, UserRoles, Post, Category, Personal],
+			models: [User, Post, Category, Personal],
+			autoLoadModels: true,
+		}),
+		UsersModule,
+		// RolesModule,
+		AuthModule,
+		PostsModule,
+		FilesModule,
+		CategoryModule,
+		PersonalModule,
+	],
 })
-export class AppModule{
-
-}
+export class AppModule {}
