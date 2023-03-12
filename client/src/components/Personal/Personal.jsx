@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../..';
-import { personalCreate } from '../../http/personalAPI';
+import { deletePersonal, fetchPersonal, personalCreate } from '../../http/personalAPI';
 import con from './Personal.module.css'
 const Personal = observer(() => {
     const [name, setName] = useState('');
@@ -67,11 +67,13 @@ const Personal = observer(() => {
 	}, [emailError, phoneError, nameError]);
 
 	// Функция для отправки формы
-	const submitData =  e => {
-		e.preventDefault();
- 		personalCreate( name, email, phone, description ).then(data =>
-			personal.setPersonal(data)
-		);
+	const submitData =  async(e) => {
+		e.preventDefault()
+ 		await personalCreate( name, email, phone, description );
+		// fetchPersonal().then(data => personal.setPersonal(data));
+ 		// personalCreate( name, email, phone, description ).then(data =>
+		// 	personal.setPersonal(data)
+		// );
 		personal.setRedy(true)
 		// personal.setPersonal({name, email, phone, description})
 		// personal.setPersonal({ name, email, phone, description });
@@ -79,8 +81,10 @@ const Personal = observer(() => {
 		setEmail('')
 		setPhone('')
 		setDescription('')
-	};
-
+	}
+useEffect(() => {
+	fetchPersonal().then(data => personal.setPersonal(data));
+}, []);
 
 	const blurHandler = (e) => {
 		switch (e.target.name) {

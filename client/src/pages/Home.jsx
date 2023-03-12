@@ -10,13 +10,13 @@ const Home = observer(() => {
 	const { user } = useContext(Context);
 	const { personal } = useContext(Context);
 	const removePersonal = id => {
-		deletePersonal(id);
-		personal.setPersonal([]);
-		personal.setRedy(false)
+		deletePersonal(id)
+		// personal.setPersonal([{}]);
+		// fetchPersonal().then(data => personal.setPersonal(data));	
+		// personal.setRedy(false)
 	};
 	useEffect(() => {
-		// fetchPersonal().then(data => console.log(data));
-		fetchPersonal().then(data => personal.setPersonal(data));
+		fetchPersonal().then(data => personal.setPersonal(data));	
 	}, []);
 	console.log(user.user.email);
 	console.log(personal) 
@@ -39,6 +39,7 @@ const Home = observer(() => {
 					</h1>
 				</div>
 			)}
+			{user.isAuth ? (
 			<div className={home.info}>
 				{' '}
 				<p>{}</p>
@@ -46,16 +47,16 @@ const Home = observer(() => {
 					{personal.isRedy ? (personal.personal.map(d => {
 						return (
 							<div key={d.id}>
-								<div>Имя: {d.name}</div>
-								<div>Номер: {d.phone}</div>
-								<div>Почта: {d.email}</div>
-								<div>Описание: {d.description}</div>
+								<div >Имя: {d.name}</div>
+								<div >Номер: {d.phone}</div>
+								<div >Почта: {d.email}</div>
+								<div >Описание: {d.description}</div>
 								<button onClick={() => removePersonal(d.id)}>Удалить</button>
 							</div>
 						);
 					})) : <div>Заполните профиль</div>}
 				</div>
-			</div>
+			</div> ): ( <p></p>) }
 		</div>
 	);
 });

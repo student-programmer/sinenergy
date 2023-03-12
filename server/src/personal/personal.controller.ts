@@ -20,6 +20,11 @@ export class PersonalController {
 	remove(@Param('id') id: number) {
 		return this.personalService.remove(id);
 	}
+
+	@Put(':id')
+	update(@Param('id') id: number, @Body() dto: createPersonalDto) {
+		return this.personalService.update(id, dto)
+	}
 	// @Patch(':id')
 	// update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
 	// 	return this.personalService.update(+id, updateUserDto);

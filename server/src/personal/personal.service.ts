@@ -20,6 +20,11 @@ export class PersonalService {
 	async remove(id: number) {
 		return await this.personal.destroy({ where: { id } });
 	}
+
+	async update(id, dto){
+		return await this.personal.update(id, dto)
+	}
+
 	// async update(id:number, body:  {name: string, email: string, phone: string, description: string}){
 	// 	const {name, email, phone, description} = body
 	// 	return await this.personal.update(
@@ -32,7 +37,14 @@ export class PersonalService {
 	// 		}
 	// 	);
 	// }
-	// async update(id) {
-	// 	const personal = await this.personal.update(id);
+	// async update(
+	// 	id: number,
+	// 	name: string,
+	// 	email: string,
+	// 	phone: string,
+	// 	description: string
+	// ) {
+	// 	const personal = await this.personal.update(id, name, email, phone, description);
+	// 	return personal;
 	// }
 }
